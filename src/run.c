@@ -58,11 +58,12 @@ void init()
 
 void allocate_memory()
 {
-  workspace = malloc(n_all_data * 10 * sizeof(double));
-  workspace_ipiv = malloc(n_all_data * 5 *sizeof(double));
+  workspace = malloc(n_all_data * 20 * sizeof(double));
+  workspace_ipiv = malloc(n_all_data * 5 *sizeof(int));
   Fall_data = malloc(n_all_data * sizeof(double));
   Larr_data = malloc(n_all_data * 3 * sizeof(double));
   PCmat_data = malloc(n_all_data * n_all_data * sizeof(double));
+  IPCmat_data = malloc(n_all_data * n_all_data * sizeof(double));
 
   Tmat1 = malloc(n_all_data*n_all_data*sizeof(double));
   Tmat2 = malloc(n_all_data*n_all_data*sizeof(double));
@@ -75,6 +76,7 @@ void free_memory()
   free(Fall_data);
   free(Larr_data);
   free(PCmat_data);
+  free(IPCmat_data);
   free(Tmat1);
   free(Tmat2);
 }

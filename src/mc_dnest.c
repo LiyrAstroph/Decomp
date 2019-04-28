@@ -90,25 +90,25 @@ void set_par_range()
   par_range_model[i++][1] = log(1.0+10.0);
 
   /* con variability */
-  par_range_model[i][0] = log(1.0e-4);
+  par_range_model[i][0] = log(1.0e-5);
   par_range_model[i++][1] = log(1.0);
 
-  par_range_model[i][0] = log(100.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i][0] = log(1.0);
+  par_range_model[i++][1] = log(1.0e8);
 
   /* radio variability */  
-  par_range_model[i][0] = log(1.0e-4);
+  par_range_model[i][0] = log(1.0e-5);
   par_range_model[i++][1] = log(1.0);
 
-  par_range_model[i][0] = log(100.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i][0] = log(1.0);
+  par_range_model[i++][1] = log(1.0e8);
 
   /* Hbeta transfer function */
   par_range_model[i][0] = log(1.0e-3);
   par_range_model[i++][1] = log(1.0e3);
   
-  par_range_model[i][0] = 0.0;
-  par_range_model[i++][1] = 500.0;
+  par_range_model[i][0] = 100.0;
+  par_range_model[i++][1] = 300.0;
 
   par_range_model[i][0] = log(1.0);
   par_range_model[i++][1] = log(1.0e3);
@@ -117,8 +117,8 @@ void set_par_range()
   par_range_model[i][0] = log(1.0e-3);
   par_range_model[i++][1] = log(1.0e3);
   
-  par_range_model[i][0] = -1000.0;
-  par_range_model[i++][1] = 0.0;
+  par_range_model[i][0] = 200.0;
+  par_range_model[i++][1] = 800.0;
 
   par_range_model[i][0] = log(1.0);
   par_range_model[i++][1] = log(1.0e3);
@@ -156,7 +156,7 @@ double perturb_mc(void *model)
   
   }while(par_fix[which] == 1);
   
-  which_level_update = dnest_get_which_level_update();
+  /*which_level_update = dnest_get_which_level_update();
   which_level = which_level_update > (size_levels - 10)?(size_levels -10):which_level_update;
 
   if( which_level > 0)
@@ -168,8 +168,9 @@ double perturb_mc(void *model)
   else
   {
     width = ( par_range_model[which][1] - par_range_model[which][0] );
-  }
+  }*/
 
+  width = ( par_range_model[which][1] - par_range_model[which][0] );
   pm[which] += dnest_randh() * width;
   dnest_wrap(&(pm[which]), par_range_model[which][0], par_range_model[which][1]);
   

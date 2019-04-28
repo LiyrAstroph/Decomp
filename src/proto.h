@@ -21,14 +21,22 @@ double Sll(double tcon, double tline, const void *model);
 double Src(double tcon, double tline, const void *model);
 double Srr(double tcon, double tline, const void *model);
 void set_covar_Pmat_data(const void *model);
+void set_covar_Umat_rec(const void *model);
+void set_covar_Amat_rec(const void *model);
+void set_covar_PSmat_data(const void *model);
+void reconstruct_all(const void *model);
+void reconstruct_all2(const void *model);
 
 /* mcmc */
 void set_par_range();
 double prob(const void *model);
+double prob2(const void *model);
 void recon();
 void recon_init();
 void recon_end();
 double mc_dnest(int argc, char **argv);
+void get_posterior_sample_file(char *fname, char *samplefile);
+void recon_postprocess();
 
 /* time */
 double second();

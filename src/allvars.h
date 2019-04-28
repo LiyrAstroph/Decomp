@@ -25,15 +25,19 @@ extern int n_con_data, n_line_data, n_radio_data, n_all_data;
 extern double *Tcon_data, *Fcon_data, *Fcerrs_data;
 extern double *Tline_data, *Fline_data, *Flerrs_data;
 extern double *Tradio_data, *Fradio_data, *Frerrs_data;
-extern double *Fall_data;
-extern double *workspace, *workspace_ipiv;
+extern double *Fall_data, *Fall_rec;
+extern double *workspace;
+extern int *workspace_ipiv;
+
+extern int n_con_rec, n_line_rec, n_radio_rec, n_all_rec;
+extern double *Tall_rec, *Fall_rec, *Feall_rec;
 
 extern double con_error_mean, line_error_mean, radio_error_mean;
 extern double con_scale, line_scale, radio_scale;
 
 extern double *Larr_data, *Larr_rec;
-extern double *PCmat_data;
-extern double *Tmat1, *Tmat2;
+extern double *PCmat_data, *IPCmat_data, *USmat_rec, *USmatT_rec, *ASmat_rec;
+extern double *Tmat1, *Tmat2, *PEmat1, *PEmat2;
 
 /* MCMC */
 extern int num_params;
