@@ -24,8 +24,11 @@ void set_covar_Pmat_data(const void *model);
 void set_covar_Umat_rec(const void *model);
 void set_covar_Amat_rec(const void *model);
 void set_covar_PSmat_data(const void *model);
+void set_covar_Umat_conjd(const void *model);
+void set_covar_Amat_conjd(const void *model);
 void reconstruct_all(const void *model);
 void reconstruct_all2(const void *model);
+void reconstruct_conjd(const void *model);
 
 /* mcmc */
 void set_par_range();

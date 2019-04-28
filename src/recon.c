@@ -74,7 +74,7 @@ void recon_postprocess()
   if(thistask == roottask)
   {
     char fname[200];
-    FILE *fp, *fcon, *fline, *fradio;
+    FILE *fp, *fcon, *fline, *fradio, *fconj, *fcond;
 
     /* get file name of posterior sample file */
     get_posterior_sample_file(dnest_options_file, posterior_sample_file);
@@ -109,6 +109,20 @@ void recon_postprocess()
       fprintf(stderr, "# Error: Cannot open file %s.\n", fname);
       exit(0);
     }
+    sprintf(fname, "%s/%s", parset.file_dir, "data/conj_rec.txt");
+    fconj = fopen(fname, "w");
+    if(fconj == NULL)
+    {
+      fprintf(stderr, "# Error: Cannot open file %s.\n", fname);
+      exit(0);
+    }
+    sprintf(fname, "%s/%s", parset.file_dir, "data/cond_rec.txt");
+    fcond = fopen(fname, "w");
+    if(fcond == NULL)
+    {
+      fprintf(stderr, "# Error: Cannot open file %s.\n", fname);
+      exit(0);
+    }
 
     /* read number of points in posterior sample */
     if(fscanf(fp, "# %d", &num_ps) < 1)
@@ -136,10 +150,11 @@ void recon_postprocess()
       memcpy(posterior_sample+i*size_of_modeltype, post_model, size_of_modeltype);
       
       reconstruct_all(post_model);
+      reconstruct_conjd(post_model);
 
       for(j=0; j<n_con_rec; j++)
       {
-        fprintf(fcon, "%f %f %f\n", Tall_rec[j], Fall_rec[j]/con_scale, Feall_rec[j]/con_scale);
+        fprintf(fcon, "%f %f %f\n", Tall_rec[j], Fall_rec[j], Feall_rec[j]);
       }
       fprintf(fcon, "\n");
       
@@ -156,6 +171,20 @@ void recon_postprocess()
         fprintf(fradio, "%f %f %f\n", Tall_rec[np+j], Fall_rec[np+j]/radio_scale, Feall_rec[np+j]/radio_scale);
       }
       fprintf(fradio, "\n");
+
+      np = 0;
+      for(j=0; j<n_con_rec; j++)
+      {
+        fprintf(fcond, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]);
+      }
+      fprintf(fcond, "\n");
+
+      np = n_con_rec;
+      for(j=0; j<n_radio_rec; j++)
+      {
+        fprintf(fconj, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]);
+      }
+      fprintf(fconj, "\n");
     }
     
     free(post_model);
@@ -165,6 +194,8 @@ void recon_postprocess()
     fclose(fcon);
     fclose(fline);
     fclose(fradio);
+    fclose(fconj);
+    fclose(fcond);
   }
 
   return;
@@ -183,13 +214,19 @@ void recon_init()
   n_radio_rec = (int)(n_radio_data * fac);
   n_all_rec = n_con_rec + n_line_rec + n_radio_rec;
 
+  n_conjd_rec = n_con_rec + n_radio_rec;
+
   Larr_rec = malloc(n_all_rec * 3 * sizeof(double));
+  Larr_conjd = malloc(n_conjd_rec * 3 * sizeof(double));
   USmat_rec = malloc(n_all_rec * n_all_data * sizeof(double));
   USmatT_rec = malloc(n_all_rec * n_all_data * sizeof(double));
   ASmat_rec = malloc(n_all_rec * n_all_rec * sizeof(double));
   Tall_rec = malloc(n_all_rec * sizeof(double));
   Fall_rec = malloc(n_all_rec * sizeof(double));
   Feall_rec = malloc(n_all_rec * sizeof(double));
+  Tconjd_rec = malloc(n_conjd_rec * sizeof(double));
+  Fconjd_rec = malloc(n_conjd_rec * sizeof(double));
+  Feconjd_rec = malloc(n_conjd_rec * sizeof(double));
   PEmat1 = malloc(n_all_rec * n_all_rec * sizeof(double));
   PEmat2 = malloc(n_all_rec * n_all_rec * sizeof(double));
 
@@ -239,6 +276,25 @@ void recon_init()
     Larr_rec[(np+i)*3 + 2] = 1.0;
   }
 
+  /* disk and jet emissions at con  */
+  memcpy(Tconjd_rec, Tall_rec, n_con_rec*sizeof(double));
+  memcpy(Tconjd_rec + n_con_rec, Tall_rec + n_con_rec+n_line_rec, n_radio_rec*sizeof(double));
+
+  /* setup Larr_data */
+  for(i=0; i<n_con_rec; i++)
+  {
+    Larr_conjd[i*3 + 0] = 0.5;
+    Larr_conjd[i*3 + 1] = 0.0;
+    Larr_conjd[i*3 + 2] = 0.0;
+  }
+  np = n_con_rec;
+  for(i=0; i<n_radio_rec; i++)
+  {
+    Larr_conjd[(np+i)*3 + 0] = 0.5;
+    Larr_conjd[(np+i)*3 + 1] = 0.0;
+    Larr_conjd[(np+i)*3 + 2] = 0.0;
+  }
+
   return;
 }
 
@@ -252,12 +308,16 @@ void recon_end()
   free(par_range_model);
 
   free(Larr_rec);
+  free(Larr_conjd);
   free(USmat_rec);
   free(USmatT_rec);
   free(ASmat_rec);
   free(Tall_rec);
   free(Fall_rec);
   free(Feall_rec);
+  free(Tconjd_rec);
+  free(Fconjd_rec);
+  free(Feconjd_rec);
   free(PEmat1);
   free(PEmat2);
 }
@@ -1010,3 +1070,205 @@ void set_covar_PSmat_data(const void *model)
   
   return;
 }
+
+/*
+ * covariances between reconstructed and data time points, for disk and jet emissions.
+ * 
+ */
+void set_covar_Umat_conjd(const void *model)
+{
+  int i, j, np_data, np_rec;
+  double *pm = (double *)model;
+  double sig_d, tau_d, sig_j, tau_j, sig2_all;
+  double t1, t2;
+
+  tau_d = exp(pm[4]);
+  sig_d = exp(pm[3] + 0.5*pm[4]);
+  tau_j = exp(pm[6]);
+  sig_j = exp(pm[5] + 0.5*pm[6]);
+  sig2_all = sig_d*sig_d + sig_j*sig_j;
+  
+  /* disk emission */
+  np_rec = 0;
+  for(i=0; i<n_con_rec; i++)
+  {
+    t1 = Tconjd_rec[np_rec + i];
+    /* con - con */
+    for(j=0; j<n_con_data; j++)
+    {
+      t2 = Tcon_data[j];
+      USmat_rec[(np_rec+i)*n_all_data + j] = (sig_d*sig_d * exp(-fabs(t2-t1)/tau_d))/sig2_all;
+    }
+    /* con - line */
+    np_data = n_con_data;
+    for(j=0; j<n_line_data; j++)
+    {
+      t2 = Tline_data[j];
+      USmat_rec[(np_rec+i)*n_all_data + j+np_data] = Slc(t1, t2, model);
+    }
+    
+    /* con - radio */
+    np_data += n_line_data;
+    for(j=0; j<n_radio_data; j++)
+    {
+      USmat_rec[(np_rec +i)*n_all_data + j+np_data] = 0.0;
+    }
+  }
+
+
+  /* jet emission */
+  np_rec += n_con_rec;
+  for(i=0; i<n_radio_rec; i++)
+  {
+    t1 = Tconjd_rec[np_rec + i];
+
+    /* radio - con */
+    np_data = 0;
+    for(j=0; j<n_con_data; j++)
+    {
+      t2 = Tcon_data[j];
+      USmat_rec[(np_rec+i)*n_all_data + (np_data+j)] = (sig_j*sig_j * exp(-fabs(t2-t1)/tau_j))/sig2_all;;
+    }
+    
+    /* radio - line */
+    np_data += n_con_data;
+    for(j=0; j<n_line_data; j++)
+    {
+      USmat_rec[(np_rec+i)*n_all_data + (np_data+j)] = 0.0;
+    }
+    
+    /* radio - radio */
+    np_data += n_line_data;
+    for(j=0; j<n_radio_data; j++)
+    {
+      t2 = Tradio_data[j];
+      USmat_rec[(np_rec+i)*n_all_data + (np_data+j)] = Src(t1, t2, model);
+    }
+  }
+
+  return;
+}
+
+/*
+ * covariances between reconstructed time points for disk and jet.
+ *  
+ */
+void set_covar_Amat_conjd(const void *model)
+{
+  int i, j, np;
+  double *pm = (double *)model;
+  double syserr_con, syserr_line, syserr_radio, sig_d, tau_d, sig_j, tau_j, sig2_all;
+  double t1, t2, error;
+  
+  syserr_con = (exp(pm[0]) - 1.0) * con_error_mean;
+  syserr_line = (exp(pm[1]) - 1.0) * line_error_mean;
+  syserr_radio = (exp(pm[2]) - 1.0) * radio_error_mean;
+  tau_d = exp(pm[4]);
+  sig_d = exp(pm[3] + 0.5*pm[4]);
+  tau_j = exp(pm[6]);
+  sig_j = exp(pm[5] + 0.5*pm[6]);
+  sig2_all = sig_d*sig_d + sig_j*sig_j;
+
+  for(i=0; i<n_con_rec; i++)
+  {
+    t1 = Tconjd_rec[i];
+
+    /* disk - disk */
+    for(j=0; j<i; j++)
+    {
+      t2 = Tconjd_rec[j];
+      ASmat_rec[i*n_conjd_rec + j] = ASmat_rec[j*n_conjd_rec + i] = 
+            ( sig_d*sig_d * exp(-fabs(t2-t1)/tau_d)) / sig2_all;
+    }
+    error = syserr_con*syserr_con;
+    ASmat_rec[i*n_conjd_rec + i] = (sig_d*sig_d + error)/sig2_all;
+
+    /* disk - jet */
+    np = n_con_rec;
+    for(j=0; j<n_radio_rec; j++)
+    {
+      t2 = Tconjd_rec[np+j];
+      ASmat_rec[i*n_conjd_rec + j+np] = ASmat_rec[(j+np)*n_conjd_rec + i] = 0.0;
+    }
+  }
+
+  /* radio - radio */
+  np = n_con_rec;
+  for(i=0; i<n_radio_rec; i++)
+  {
+    t1 = Tconjd_rec[np+i];
+    for(j=0; j<i; j++)
+    {
+      t2 = Tconjd_rec[np+j];
+      ASmat_rec[(np+i)*n_conjd_rec + (np+j)] = ASmat_rec[(np+j)*n_conjd_rec + (np+i)] = 
+          ( sig_j*sig_j * exp(-fabs(t2-t1)/tau_j)) / sig2_all;
+    }
+    error = syserr_radio*syserr_radio;
+    ASmat_rec[(np+i)*n_conjd_rec + (np+i)] = (sig_j*sig_j + error)/sig2_all;
+  }
+  
+  return;
+}
+
+/* reconstruct disk and jet emission */
+void reconstruct_conjd(const void *model)
+{
+  int i, nq=3, info;
+  double *Cq, *yq, *ybuf, *y, *yave, *yave_rec;
+
+  Cq = workspace;
+  yq = Cq + nq*nq;
+  yave = yq + nq;
+  y = yave + n_all_data;
+  ybuf = y + n_all_data;
+  yave_rec = ybuf + n_all_data * nq;
+
+  set_covar_Pmat_data(model);
+  set_covar_Umat_conjd(model);
+
+  /* C^-1 */
+  memcpy(IPCmat_data, PCmat_data, n_all_data*n_all_data*sizeof(double));
+  inverse_mat(IPCmat_data, n_all_data, &info); 
+
+  /* L^T*C^-1*L */
+  multiply_mat_MN(IPCmat_data, Larr_data, ybuf, n_all_data, nq, n_all_data); // ybuf = C^-1*L; nd*nq
+  multiply_mat_MN_transposeA(Larr_data, ybuf, Cq, nq, nq, n_all_data); // Cq = L^T*C^-1*L; nq*nq
+  
+  /* L^T*C^-1*y */
+  multiply_matvec(IPCmat_data, Fall_data, n_all_data, ybuf);   // ybuf = C^-1*Fall_data; nd*1
+  multiply_mat_MN_transposeA(Larr_data, ybuf, yq, nq, 1, n_all_data); // yq = L^T*C^-1*Fall_data; nq*1
+
+  /* (L^T*C^-1*L)^-1 * L^T*C^-1*y */
+  inverse_mat(Cq, nq, &info);
+  multiply_mat_MN(Cq, yq, ybuf, nq, 1, nq); // ybuf = (L^T*C^-1*L)^-1 * L^T*C^-1*y; nq*1
+  
+  multiply_matvec_MN(Larr_data, n_all_data, nq, ybuf, yave); // yave = L*ybuf; nd*1
+  for(i=0; i<n_all_data; i++)
+  {
+    y[i] = Fall_data[i] - yave[i];
+  }
+  multiply_matvec(IPCmat_data, y, n_all_data, yave);  // yave = C^-1*y; nd*1
+  
+  /* S*C^-1*y */
+  multiply_matvec_MN(USmat_rec, n_conjd_rec, n_all_data, yave, Fconjd_rec); // Fall_rec =  S*C^-1*y; nr*1
+  multiply_matvec_MN(Larr_conjd, n_conjd_rec, nq, ybuf, yave_rec);   
+
+  for(i=0; i<n_conjd_rec; i++)
+  {
+    Fconjd_rec[i] += yave_rec[i];
+  }
+
+  // get errors
+  /* S x C^-1 x S */
+  set_covar_Amat_conjd(model);
+  multiply_mat_MN(USmat_rec, IPCmat_data, PEmat1, n_conjd_rec, n_all_data, n_all_data);
+  multiply_mat_MN_transposeB(PEmat1, USmat_rec, PEmat2, n_conjd_rec, n_conjd_rec, n_all_data);
+  
+  for(i=0; i<n_conjd_rec; i++)
+  {
+    Feconjd_rec[i] = sqrt(ASmat_rec[i*n_conjd_rec + i] - PEmat2[i*n_conjd_rec + i]);
+  }
+
+  return;
+}
+

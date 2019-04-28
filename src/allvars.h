@@ -29,13 +29,14 @@ extern double *Fall_data, *Fall_rec;
 extern double *workspace;
 extern int *workspace_ipiv;
 
-extern int n_con_rec, n_line_rec, n_radio_rec, n_all_rec;
+extern int n_con_rec, n_line_rec, n_radio_rec, n_all_rec, n_conjd_rec;
 extern double *Tall_rec, *Fall_rec, *Feall_rec;
+extern double *Tconjd_rec, *Fconjd_rec, *Feconjd_rec;
 
 extern double con_error_mean, line_error_mean, radio_error_mean;
 extern double con_scale, line_scale, radio_scale;
 
-extern double *Larr_data, *Larr_rec;
+extern double *Larr_data, *Larr_rec, *Larr_conjd;
 extern double *PCmat_data, *IPCmat_data, *USmat_rec, *USmatT_rec, *ASmat_rec;
 extern double *Tmat1, *Tmat2, *PEmat1, *PEmat2;
 

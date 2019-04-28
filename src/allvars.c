@@ -19,13 +19,14 @@ double *Fall_data;
 double *workspace;
 int *workspace_ipiv;
 
-int n_con_rec, n_line_rec, n_radio_rec, n_all_rec;
+int n_con_rec, n_line_rec, n_radio_rec, n_all_rec, n_conjd_rec;
 double *Tall_rec, *Fall_rec, *Feall_rec;
+double *Tconjd_rec, *Fconjd_rec, *Feconjd_rec;
 
 double con_error_mean, line_error_mean, radio_error_mean;
 double con_scale, line_scale, radio_scale;
 
-double *Larr_data, *Larr_rec;
+double *Larr_data, *Larr_rec, *Larr_conjd;
 double *PCmat_data, *IPCmat_data, *USmat_rec, *USmatT_rec, *ASmat_rec;
 double *Tmat1, *Tmat2, *PEmat1, *PEmat2;
 
