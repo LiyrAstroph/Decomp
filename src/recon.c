@@ -164,7 +164,7 @@ void recon_postprocess()
 
       for(j=0; j<n_con_rec; j++)
       {
-        fprintf(fcon, "%f %f %f\n", Tall_rec[j], Fall_rec[j], Feall_rec[j]);
+        fprintf(fcon, "%f %f %f\n", Tall_rec[j], Fall_rec[j], Feall_rec[j]/con_scale);
       }
       fprintf(fcon, "\n");
       
@@ -185,14 +185,14 @@ void recon_postprocess()
       np = 0;
       for(j=0; j<n_con_rec; j++)
       {
-        fprintf(fcond, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]);
+        fprintf(fcond, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]/con_scale);
       }
       fprintf(fcond, "\n");
 
       np = n_con_rec;
       for(j=0; j<n_radio_rec; j++)
       {
-        fprintf(fconj, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]);
+        fprintf(fconj, "%f %f %f\n", Tconjd_rec[np+j], Fconjd_rec[np+j], Feconjd_rec[np+j]/con_scale);
       }
       fprintf(fconj, "\n");
     }

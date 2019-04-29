@@ -14,4 +14,4 @@ RadioFile                   data/radio_bin.txt         % file for line 2d data
 
 FlagConSysErr               1                           % 0, not include systematic error of contininuum; 1, include
 FlagLineSysErr              1                           % 0, not include systematic error of line; 1, include
-FlagRadioSysErr             1                           % 0, not include systematic error of line; 1, include
+FlagRadioSysErr             1                           % 0, not include systematic error of radio; 1, include
