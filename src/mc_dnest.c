@@ -1,3 +1,13 @@
+/*
+ * Decomp
+ * 
+ * Decompose the optical emissions from disk and jet in 3C 273 with reveberation mapping data.
+ * 
+ * Yan-Rong Li, liyanrong@mail.ihep.ac.cn
+ * 
+ * Apr 29, 2019
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

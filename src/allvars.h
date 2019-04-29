@@ -1,3 +1,12 @@
+/*
+ * Decomp
+ * 
+ * Decompose the optical emissions from disk and jet in 3C 273 with reveberation mapping data.
+ * 
+ * Yan-Rong Li, liyanrong@mail.ihep.ac.cn
+ * 
+ * Apr 29, 2019
+ */
 
 #ifndef _ALLVARS_H
 #define _ALLVARS_H
