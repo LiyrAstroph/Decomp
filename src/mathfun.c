@@ -119,6 +119,62 @@ void inverse_mat(double * a, int n, int *info)
   free(ipiv);
   return;
 }
+
+void inverse_symat_lndet(double * a, int n, double *lndet, int *info, int *ipiv)
+{
+  int i, j;
+
+  *info = LAPACKE_dsytrf(LAPACK_ROW_MAJOR, 'U', n, a, n, ipiv);
+  
+  *lndet = 0.0;
+  for(i=0; i<n; i++)
+  {
+    *lndet += log(a[i*n+i]);
+  }
+
+  *info = LAPACKE_dsytri(LAPACK_ROW_MAJOR, 'U', n, a, n, ipiv);
+
+  /* fill up the lower triangle */
+  for(i=0; i<n; i++)
+    for(j=0; j<i; j++)
+      a[i*n+j] = a[j*n+i];
+  return;
+}
+/* A^-1 */
+void inverse_symat_lndet_sign(double * a, int n, double *lndet, int *info, int *sign, int *ipiv)
+{
+  int i, j;
+
+  *info = LAPACKE_dsytrf(LAPACK_ROW_MAJOR, 'U', n, a, n, ipiv);
+  if(*info!=0)
+  {
+    printf("inverse_mat\n");
+    exit(9);
+  }
+
+  *lndet = 0.0;
+  *sign = 1;
+  for(i=0; i<n; i++)
+  {
+    *lndet += log(fabs(a[i*n+i]));
+    *sign *= (a[i*n+i]>=0?1:-1);
+  }
+
+  *info = LAPACKE_dsytri(LAPACK_ROW_MAJOR, 'U', n, a, n, ipiv);
+  if(*info!=0)
+  {
+    printf("inverse_mat\n");
+    exit(9);
+  }
+
+  /* fill up the lower triangle */
+  for(i=0; i<n; i++)
+    for(j=0; j<i; j++)
+      a[i*n+j] = a[j*n+i];
+
+  return;
+}
+
 /* eigen vector and eigen values */
 void eigen_sym_mat(double *a, int n, double *val, int *info)
 {

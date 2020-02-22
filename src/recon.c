@@ -600,6 +600,83 @@ double prob2(const void *model)
   return prob;
 }
 
+/*!
+ * matrix operation A^-1 x B is implemented by calling functions
+ *    inverse_mat()
+ *    multiply_mat_MN()
+ */
+double prob3(const void *model)
+{
+  int i, nq=3, info, sign, *ipiv;
+  double prob=0.0, lndet, lndet_ICq;
+  double *Cq, *ICq, *yq, *ybuf, *y, *yave;
+  double *pm = (double *)model, sig_j, sig_d, sig2_all;
+
+  sig_d = exp(pm[3] + 0.5*pm[4]);
+  sig_j = exp(pm[5] + 0.5*pm[6]);
+  sig2_all = sig_d*sig_d + sig_j*sig_j;
+  
+  Cq = workspace;
+  ICq = Cq + nq*nq;
+  yq = ICq + nq*nq;
+  yave = yq + nq;
+  y = yave + n_all_data;
+  ybuf = y + n_all_data;
+
+  ipiv = workspace_ipiv;
+
+  set_covar_Pmat_data(model);
+
+  /* C^-1 */
+  inverse_symat_lndet_sign(PCmat_data, n_all_data, &lndet, &info, &sign, ipiv); /* calculate C^-1 */
+  if(info!=0|| sign==-1)
+  {
+    prob = -DBL_MAX;
+    printf("lndet_C %f %d!\n", lndet, sign);
+    return prob;
+  }
+  lndet += n_all_data*log(sig2_all);
+
+  /* L^T*C^-1*L */
+  multiply_mat_MN(PCmat_data, Larr_data, ybuf, n_all_data, nq, n_all_data); /* NxNq */
+  multiply_mat_MN_transposeA(Larr_data, ybuf, Cq, nq, nq, n_all_data); /* NqxNq */
+
+  /* L^T*C^-1*y */
+  multiply_matvec(PCmat_data, Fall_data, n_all_data, ybuf); /* Nx1 */
+  multiply_mat_MN_transposeA(Larr_data, ybuf, yq, nq, 1, n_all_data); /* nqx1 */ 
+
+  /* (L^T*C^-1*L)^-1 * L^T*C^-1*y */
+  inverse_symat_lndet_sign(Cq, nq, &lndet_ICq, &info, &sign, ipiv); 
+  if(info!=0 || sign==-1 )
+  {
+    prob = -DBL_MAX;
+    printf("lndet_ICq %f %d!\n", lndet_ICq, sign);
+    return prob;
+  }
+  lndet_ICq += - nq*log(sig2_all);
+  multiply_mat_MN(Cq, yq, ybuf, nq, 1, nq);  /* nqx1 */
+
+  multiply_matvec_MN(Larr_data, n_all_data, nq, ybuf, yave);
+  for(i=0; i<n_all_data; i++)
+  {
+    y[i] = Fall_data[i] - yave[i];
+  }
+
+  /* y^T x C^-1 x y */
+  multiply_matvec(PCmat_data, y, n_all_data, ybuf);
+  prob = -0.5 * cblas_ddot(n_all_data, y, 1, ybuf, 1) / sig2_all;
+  
+  if(prob > 0.0 )  // check if prob is positive
+  { 
+    prob = -DBL_MAX;
+    printf("prob >0!\n");
+    return prob;
+  }
+  prob += prob - 0.5*lndet - 0.5*lndet_ICq;
+  
+  return prob;
+}
+
 void set_covar_Pmat_data(const void *model)
 {
   int i, j, np;
@@ -1002,7 +1079,7 @@ void set_covar_PSmat_data(const void *model)
   int i, j, np;
   double *pm = (double *)model;
   double syserr_con, syserr_line, syserr_radio, sig_d, tau_d, sig_j, tau_j;
-  double t1, t2, error, sig2_all;
+  double t1, t2, sig2_all;
 
   syserr_con = (exp(pm[0]) - 1.0) * con_error_mean;
   syserr_line = (exp(pm[1]) - 1.0) * line_error_mean;
@@ -1075,7 +1152,7 @@ void set_covar_PSmat_data(const void *model)
       t2 = Tradio_data[j];
       PCmat_data[(np+i)*n_all_data + (np+j)] = PCmat_data[(np+j)*n_all_data + (np+i)] = Srr(t1, t2, model);
     }
-    PCmat_data[(np+i)*n_all_data + (np+i)] = Srr(t1, t1, model) + error/sig2_all;
+    PCmat_data[(np+i)*n_all_data + (np+i)] = Srr(t1, t1, model);
   }
   
   return;

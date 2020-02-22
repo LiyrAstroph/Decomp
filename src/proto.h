@@ -44,6 +44,7 @@ void reconstruct_conjd(const void *model);
 void set_par_range();
 double prob(const void *model);
 double prob2(const void *model);
+double prob3(const void *model);
 void recon();
 void recon_init();
 void recon_end();
@@ -61,6 +62,8 @@ void print_help();
 
 /* matrix operations */
 void inverse_mat(double *a, int n, int *info);
+void inverse_symat_lndet(double * a, int n, double *lndet, int *info, int *ipiv);
+void inverse_symat_lndet_sign(double * a, int n, double *lndet, int *info, int *sign, int *ipiv);
 double det_mat(double *a, int n, int *info);
 double lndet_mat(double *a, int n, int *info);
 double lndet_mat2(double *a, int n, int *info, int *sign);
