@@ -13,13 +13,26 @@ GSL_INCL    = $(shell pkg-config --cflags gsl)
 GSL_LIBS    = $(shell pkg-config --libs gsl) 
 LAPACK_INCL = -I/usr/include/lapacke
 LAPACK_LIBS = -L/usr/lib64 -llapacke -llapack -lblas
-DNEST_INCL  = -I /home/liyropt/Projects/GIT/DNest/
-DNEST_LIBS  = -L /home/liyropt/Projects/GIT/DNest -ldnest
+DNEST_INCL  = -I /home/liyropt/Projects/GIT/CDNest/
+DNEST_LIBS  = -L /home/liyropt/Projects/GIT/CDNest -ldnest
 
 MPICHINCL     = $(shell pkg-config --cflags mpich) 
 MPICHLIB    = $(shell pkg-config --libs mpich) 
 endif
 
+ifeq ($(SYSTEM), "Tianhe")
+GSL_INCL =
+GSL_LIBS = -lgsl -lgslcblas
+MPICHLIB =
+MPIINCL  =
+LAPACK_INCL = -I /THL8/software/lapack/3.8.0-icc16-dyn/include
+LAPACK_LIBS = #/THL8/software/lapack/3.7.0-icc16/liblapacke.a /THL8/software/lapack/3.7.0-icc16/liblapack.a /THL8/software/lapack/3.7.0-icc16/libblas.a 
+FFTW_INCL =
+FFTW_LIBS = -lfftw3
+
+DNEST_INCL  = -I /THL8/home/liyanrong3/soft/CDNest
+DNEST_LIBS  = -L /THL8/home/liyanrong3/soft/CDNest -ldnest
+endif
 
 EXEC     = decomp
 SRC      = ./src
