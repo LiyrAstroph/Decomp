@@ -514,7 +514,7 @@ double prob(const void *model)
     return prob;
   }
 
-  lndet_ICq = lndet_mat3(ICq, nq, &info, &sign) + nq*log(sig2_all);
+  lndet_ICq = lndet_mat3(ICq, nq, &info, &sign) - nq*log(sig2_all);
   if(info!=0 || sign==-1 )
   {
     prob = -DBL_MAX;
