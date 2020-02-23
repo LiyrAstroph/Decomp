@@ -104,14 +104,14 @@ void set_par_range()
   par_range_model[i++][1] = log(0.1);
 
   par_range_model[i][0] = log(1.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i++][1] = log(1.0e8);
 
   /* radio variability */  
   par_range_model[i][0] = log(1.0e-5);
   par_range_model[i++][1] = log(0.1);
 
   par_range_model[i][0] = log(1.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i++][1] = log(1.0e8);
 
   /* Hbeta transfer function */
   par_range_model[i][0] = log(1.0e-3);
@@ -193,7 +193,7 @@ double perturb_mc(void *model)
 double log_likelihoods_cal_mc(const void *model)
 {
   double logL;
-  logL = prob3(model);
+  logL = prob(model);
   return logL;
 }
 

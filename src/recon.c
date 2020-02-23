@@ -334,7 +334,7 @@ void recon_end()
 
 void reconstruct_all(const void *model)
 {
-  int i, j, nq=3;
+  int i, j, nq=3, *ipiv;
   double *ICq, *yq, *ybuf, *y, *yave, *yave_rec;
 
   ICq = workspace;
@@ -344,25 +344,27 @@ void reconstruct_all(const void *model)
   ybuf = y + n_all_data;
   yave_rec = ybuf + n_all_data;
 
+  ipiv = workspace_ipiv;
+
   set_covar_Pmat_data(model);
   set_covar_Umat_rec(model);
 
   memcpy(Tmat1, PCmat_data, n_all_data*n_all_data*sizeof(double));
   memcpy(Tmat2, Larr_data, n_all_data*nq*sizeof(double));
 
-  multiply_mat_MN_inverseA(Tmat1, Tmat2, n_all_data, nq); // Tmat2 = C^-1 * L;  NxNq
+  multiply_mat_MN_inverseA(Tmat1, Tmat2, n_all_data, nq, ipiv); // Tmat2 = C^-1 * L;  NxNq
   
   multiply_mat_MN_transposeA(Larr_data, Tmat2, ICq, nq, nq, n_all_data); // ICq = L^T*C^-1*L; NqxNq
   multiply_mat_MN_transposeA(Tmat2, Fall_data, yq, nq, 1, n_all_data); // yq = L^T*C^-1*y;  Nqx1
   memcpy(Tmat1, ICq, nq*nq*sizeof(double));
-  multiply_mat_MN_inverseA(Tmat1, yq, nq, 1); // yq = (L^T*C^-1*L)^-1 * L^T*C^-1*y; Nqx1
+  multiply_mat_MN_inverseA(Tmat1, yq, nq, 1, ipiv); // yq = (L^T*C^-1*L)^-1 * L^T*C^-1*y; Nqx1
 
   multiply_mat_MN(Larr_data, yq, yave, n_all_data, 1, nq); // yave = L * q; Nx1
 
   for(i=0; i<n_all_data; i++)y[i] = Fall_data[i] - yave[i];
   memcpy(Tmat1, PCmat_data, n_all_data*n_all_data*sizeof(double));
   memcpy(ybuf, y, n_all_data*sizeof(double));
-  multiply_mat_MN_inverseA(Tmat1, ybuf, n_all_data, 1); // ybuf = C^-1 * y; Nx1
+  multiply_mat_MN_inverseA(Tmat1, ybuf, n_all_data, 1, ipiv); // ybuf = C^-1 * y; Nx1
 
   multiply_matvec_MN(USmat_rec, n_all_rec, n_all_data, ybuf, Fall_rec); // Fall_rec = S*C^-1*y
   multiply_matvec_MN(Larr_rec, n_all_rec, nq, yq, yave_rec);   // yave_rec = L*yq
@@ -382,7 +384,7 @@ void reconstruct_all(const void *model)
   memcpy(PEmat1, PCmat_data, n_all_data*n_all_data*sizeof(double));
   memcpy(PEmat2, USmatT_rec, n_all_rec*n_all_data*sizeof(double));
 
-  multiply_mat_MN_inverseA(PEmat1, PEmat2, n_all_data, n_all_rec); // C^-1 x S; NdxN
+  multiply_mat_MN_inverseA(PEmat1, PEmat2, n_all_data, n_all_rec, ipiv); // C^-1 x S; NdxN
   multiply_mat_MN(USmat_rec, PEmat2, PEmat1, n_all_rec, n_all_rec, n_all_data); // S x C^-1 x S; NxN
 
   set_covar_Amat_rec(model);
@@ -460,7 +462,7 @@ void reconstruct_all2(const void *model)
  */
 double prob(const void *model)
 {
-  int i, nq=3, info, sign;
+  int i, nq=3, info, sign, *ipiv;
   double prob=0.0, lndet, lndet_ICq;
   double *ICq, *yq, *ybuf, *y, *yave;
   double *pm = (double *)model, sig_j, sig_d, sig2_all;
@@ -475,24 +477,26 @@ double prob(const void *model)
   y = yave + n_all_data;
   ybuf = y + n_all_data;
 
+  ipiv = workspace_ipiv;
+
   set_covar_Pmat_data(model);
 
   memcpy(Tmat1, PCmat_data, n_all_data*n_all_data*sizeof(double));
   memcpy(Tmat2, Larr_data, n_all_data*nq*sizeof(double));
 
-  multiply_mat_MN_inverseA(Tmat1, Tmat2, n_all_data, nq); // Tmat2 = C^-1 * L;  NxNq
+  multiply_mat_MN_inverseA(Tmat1, Tmat2, n_all_data, nq, ipiv); // Tmat2 = C^-1 * L;  NxNq
   
   multiply_mat_MN_transposeA(Larr_data, Tmat2, ICq, nq, nq, n_all_data); // ICq = L^T*C^-1*L; NqxNq
   multiply_mat_MN_transposeA(Tmat2, Fall_data, yq, nq, 1, n_all_data); // yq = L^T*C^-1*y;  Nqx1
   memcpy(Tmat1, ICq, nq*nq*sizeof(double));
-  multiply_mat_MN_inverseA(Tmat1, yq, nq, 1); // yq = (L^T*C^-1*L)^-1 * L^T*C^-1*y; Nqx1
+  multiply_mat_MN_inverseA(Tmat1, yq, nq, 1, ipiv); // yq = (L^T*C^-1*L)^-1 * L^T*C^-1*y; Nqx1
 
   multiply_mat_MN(Larr_data, yq, yave, n_all_data, 1, nq); // yave = L * q; Nx1
 
   for(i=0; i<n_all_data; i++)y[i] = Fall_data[i] - yave[i];
   memcpy(Tmat1, PCmat_data, n_all_data*n_all_data*sizeof(double));
   memcpy(ybuf, y, n_all_data*sizeof(double));
-  multiply_mat_MN_inverseA(Tmat1, ybuf, n_all_data, 1); // ybuf = C^-1 * y; Nx1
+  multiply_mat_MN_inverseA(Tmat1, ybuf, n_all_data, 1, ipiv); // ybuf = C^-1 * y; Nx1
 
   prob = -0.5*cblas_ddot(n_all_data, y, 1, ybuf, 1)/sig2_all; // y^T * C^-1 * y
   if(prob > 0.0 )  // check if prob is positive

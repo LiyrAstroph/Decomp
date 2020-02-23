@@ -74,10 +74,9 @@ void multiply_matvec_MN(double * a, int m, int n, double *x, double *y)
 }
 /* A(mxm)^-1 * B(mxn), store the output in B
  * note that A will be changed on exit. */
-int multiply_mat_MN_inverseA(double * a, double *b, int m, int n)
+int multiply_mat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv)
 {
-  int * ipiv, info;
-  ipiv=malloc(m*sizeof(int));
+  int info;
 
   info=LAPACKE_dgetrf(LAPACK_ROW_MAJOR, m, m, a, m, ipiv);
   if(info!=0)
@@ -92,7 +91,6 @@ int multiply_mat_MN_inverseA(double * a, double *b, int m, int n)
     exit(9);
   }
 
-  free(ipiv);
   return info;
 }
 /* A^-1 */
