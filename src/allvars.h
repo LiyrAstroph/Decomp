@@ -49,6 +49,8 @@ extern double *Larr_data, *Larr_rec, *Larr_conjd;
 extern double *PCmat_data, *IPCmat_data, *USmat_rec, *USmatT_rec, *ASmat_rec;
 extern double *Tmat1, *Tmat2, *PEmat1, *PEmat2;
 
+extern double *mean;
+
 /* MCMC */
 extern int num_params;
 extern double **par_range_model;

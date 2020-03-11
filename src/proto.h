@@ -79,6 +79,8 @@ void multiply_mat_MN(double * a, double *b, double *c, int m, int n, int k);
 void multiply_mat_MN_transposeA(double * a, double *b, double *c, int m, int n, int k);
 void multiply_mat_MN_transposeB(double * a, double *b, double *c, int m, int n, int k);
 int multiply_mat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv);
+int multiply_symat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv);
+int multiply_pomat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv);
 void multiply_vec2mat(double * x, double * a, int n);
 void eigen_sym_mat(double *a, int n, double *val, int *info);
 void Chol_decomp_U(double *a, int n, int *info);

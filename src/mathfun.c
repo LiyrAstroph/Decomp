@@ -93,6 +93,53 @@ int multiply_mat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv)
 
   return info;
 }
+
+/* A(mxm)^-1 * B(mxn), store the output in B
+ * A is symmetric matrix
+ * note that A will be changed on exit. */
+int multiply_symat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv)
+{
+  int info;
+
+  info=LAPACKE_dsytrf(LAPACK_ROW_MAJOR, 'U', m, a, m, ipiv);
+  if(info!=0)
+  {
+    printf("error in multiply_mat_MN_inverseA.\n");
+    exit(9);
+  }
+  info = LAPACKE_dsytrs(LAPACK_ROW_MAJOR, 'U', m, n, a, m, b, n, ipiv);
+  if(info!=0)
+  {
+    printf("error in multiply_mat_MN_inverseA.\n");
+    exit(9);
+  }
+
+  return info;
+}
+
+/* A(mxm)^-1 * B(mxn), store the output in B
+ * A is positive-definite symmetric matrix
+ * note that A will be changed on exit. */
+int multiply_pomat_MN_inverseA(double * a, double *b, int m, int n, int *ipiv)
+{
+  int info;
+
+  info=LAPACKE_dpotrf(LAPACK_ROW_MAJOR, 'U', m, a, m);
+  if(info!=0)
+  {
+    printf("error in multiply_mat_MN_inverseA.\n");
+    exit(9);
+  }
+  info = LAPACKE_dpotrs(LAPACK_ROW_MAJOR, 'U', m, n, a, m, b, n);
+  if(info!=0)
+  {
+    printf("error in multiply_mat_MN_inverseA.\n");
+    exit(9);
+  }
+
+  return info;
+}
+
 /* A^-1 */
 void inverse_mat(double * a, int n, int *info)
 {

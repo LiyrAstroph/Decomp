@@ -40,6 +40,8 @@ double *Larr_data, *Larr_rec, *Larr_conjd;
 double *PCmat_data, *IPCmat_data, *USmat_rec, *USmatT_rec, *ASmat_rec;
 double *Tmat1, *Tmat2, *PEmat1, *PEmat2;
 
+double *mean;
+
 // MCMC
 int num_params;
 double **par_range_model;

@@ -104,14 +104,14 @@ void set_par_range()
   par_range_model[i++][1] = log(0.1);
 
   par_range_model[i][0] = log(1.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i++][1] = log(Tcon_data[n_con_data-1] - Tcon_data[0]);
 
   /* radio variability */  
   par_range_model[i][0] = log(1.0e-5);
   par_range_model[i++][1] = log(0.1);
 
   par_range_model[i][0] = log(1.0);
-  par_range_model[i++][1] = log(1.0e5);
+  par_range_model[i++][1] = log(Tcon_data[n_con_data-1] - Tcon_data[0]);
 
   /* Hbeta transfer function */
   par_range_model[i][0] = log(1.0e-3);
