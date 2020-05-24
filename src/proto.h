@@ -49,7 +49,6 @@ void recon();
 void recon_init();
 void recon_end();
 double mc_dnest(int argc, char **argv);
-void get_posterior_sample_file(char *fname, char *samplefile);
 void recon_postprocess();
 
 /* time */

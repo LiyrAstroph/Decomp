@@ -87,7 +87,7 @@ void recon_postprocess()
     FILE *fp, *fcon, *fline, *fradio, *fconj, *fcond, *fmean;
 
     /* get file name of posterior sample file */
-    get_posterior_sample_file(dnest_options_file, posterior_sample_file);
+    dnest_get_posterior_sample_file(posterior_sample_file);
 
     /* open file for posterior sample */
     fp = fopen(posterior_sample_file, "r");
