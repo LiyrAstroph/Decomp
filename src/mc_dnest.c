@@ -117,8 +117,8 @@ void set_par_range()
   par_range_model[i][0] = log(1.0e-3);
   par_range_model[i++][1] = log(1.0e3);
   
-  par_range_model[i][0] = 100.0;
-  par_range_model[i++][1] = 300.0;
+  par_range_model[i][0] = parset.lag_line_low;
+  par_range_model[i++][1] = parset.lag_line_upp;
 
   par_range_model[i][0] = log(1.0);
   par_range_model[i++][1] = log(1.0e3);
@@ -127,8 +127,8 @@ void set_par_range()
   par_range_model[i][0] = log(1.0e-3);
   par_range_model[i++][1] = log(1.0e3);
   
-  par_range_model[i][0] = 200.0;
-  par_range_model[i++][1] = 800.0;
+  par_range_model[i][0] = parset.lag_radio_low;
+  par_range_model[i++][1] = parset.lag_radio_upp;
 
   par_range_model[i][0] = log(1.0);
   par_range_model[i++][1] = log(1.0e3);

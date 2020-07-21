@@ -78,6 +78,8 @@ typedef struct
   int flag_rng_seed, rng_seed;
   int flag_con_sys_err, flag_line_sys_err, flag_radio_sys_err;
 
+  double lag_line_low, lag_line_upp, lag_radio_low, lag_radio_upp;
+
 }PARSET;
 extern PARSET parset;
 

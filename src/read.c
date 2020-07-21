@@ -53,6 +53,22 @@ void read_parset()
     addr[nt] = &parset.flag_radio_sys_err;
     id[nt++] = INT;
 
+    strcpy(tag[nt], "LagLineLow");
+    addr[nt] = &parset.lag_line_low;
+    id[nt++] = DOUBLE;
+
+    strcpy(tag[nt], "LagLineUpp");
+    addr[nt] = &parset.lag_line_upp;
+    id[nt++] = DOUBLE;
+
+    strcpy(tag[nt], "LagRadioLow");
+    addr[nt] = &parset.lag_radio_low;
+    id[nt++] = DOUBLE;
+
+    strcpy(tag[nt], "LagRadioUpp");
+    addr[nt] = &parset.lag_radio_upp;
+    id[nt++] = DOUBLE;
+
     char fname[200];
     sprintf(fname, "%s", parset.param_file);
     
