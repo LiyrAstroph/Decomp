@@ -18,7 +18,7 @@
 #include <gsl/gsl_interp.h>
 #include <mpi.h>
 // header file for DNEST
-#include "dnestvars.h"
+#include "dnest.h"
 
 #include "allvars.h"
 #include "mc_dnest.h"
@@ -79,7 +79,7 @@ double mc_dnest(int argc, char **argv)
     par_fix_val[2] = log(1.0);
   }
 
-  logz = dnest(argc, argv, fptrset, num_params, "data/", dnest_options_file);
+  logz = dnest(argc, argv, fptrset, num_params, NULL, NULL, NULL, "data/", dnest_options_file, NULL);
   
   dnest_free_fptrset(fptrset);
   return logz;
@@ -220,12 +220,12 @@ void read_particle_mc(FILE *fp, void *model)
   int j;
   double *psample = (double *)model;
 
-  for(j=0; j < dnest_num_params; j++)
+  for(j=0; j < num_params; j++)
   {
     if(fscanf(fp, "%lf", psample+j) < 1)
     {
       printf("%f\n", *psample);
-      fprintf(stderr, "#Error: Cannot read file %s.\n", options.sample_file);
+      fprintf(stderr, "#Error: Cannot read file sample.txt.\n");
       exit(0);
     }
   }

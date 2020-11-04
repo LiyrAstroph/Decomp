@@ -16,7 +16,7 @@
 #include <gsl/gsl_cblas.h>
 #include <gsl/gsl_sf_erf.h>
 
-#include "dnestvars.h"
+#include "dnest.h"
 #include "allvars.h"
 #include "proto.h"
 
