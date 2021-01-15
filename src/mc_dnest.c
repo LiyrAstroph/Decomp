@@ -79,7 +79,7 @@ double mc_dnest(int argc, char **argv)
     par_fix_val[2] = log(1.0);
   }
 
-  logz = dnest(argc, argv, fptrset, num_params, NULL, NULL, NULL, "data/", dnest_options_file, NULL);
+  logz = dnest(argc, argv, fptrset, num_params, NULL, NULL, NULL, "data/", dnest_options_file, NULL, NULL);
   
   dnest_free_fptrset(fptrset);
   return logz;
