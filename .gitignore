@@ -1,0 +1,7 @@
+*.o
+decomp
+!data/
+data/*
+!data/con_bin.txt
+!data/hb_bin.txt
+!data/radio_bin.txt

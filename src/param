@@ -10,7 +10,7 @@ FileDir                     ./      % directory for where all the output files a
 
 ContinuumFile               data/con_bin.txt          % file for contnnum data
 LineFile                    data/hb_bin.txt           % file for line data
-RadioFile                   data/radio_bin.txt         % file for line 2d data
+RadioFile                   data/radio_bin.txt         % file for radio data
 
 FlagConSysErr               1                           % 0, not include systematic error of contininuum; 1, include
 FlagLineSysErr              1                           % 0, not include systematic error of line; 1, include
