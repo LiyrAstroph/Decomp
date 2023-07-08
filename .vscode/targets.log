@@ -1,0 +1,466 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
+# GNU Make 4.3
+# Built for x86_64-redhat-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Jul 18 15:31:41 2022
+
+# Variables
+
+# makefile (from 'Makefile', line 16)
+DNEST_INCL = -I /home/liyropt/Projects/GIT/CDNest/
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
+# environment
+GNOME_SHELL_SESSION_MODE = classic
+# makefile (from 'Makefile', line 38)
+SRC = ./src
+# makefile (from 'Makefile', line 8)
+SYSTEM = "Linux"
+# environment
+MPI_MAN = /usr/share/man/mpich-x86_64
+# environment
+MPI_PYTHON2_SITEARCH = %{python2_sitearch}/mpich
+# environment
+GDL_PATH = +/usr/share/gnudatalanguage
+# environment
+VSCODE_CWD = /home/liyropt/Projects/GIT/Decomp
+# environment
+WINDOWPATH = 2
+# makefile (from 'Makefile', line 47)
+LIBS = $(GSL_LIBS) $(LAPACK_LIBS) $(MPICHLIB) $(DNEST_LIBS)
+# environment
+MODULES_CMD = /usr/share/Modules/libexec/modulecmd.tcl
+# environment
+GDM_LANG = en_US.UTF-8
+# default
+MAKE_COMMAND := make
+# environment
+define BASH_FUNC_which%%
+() {  ( alias;
+ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}
+endef
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+MPI_FORTRAN_MOD_DIR = /usr/lib64/gfortran/modules/mpich
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/liyropt/Projects/GIT/Decomp
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+HOSTNAME = fedora
+# environment
+MAIL = /var/spool/mail/liyropt
+# environment
+XDG_DATA_DIRS = /home/liyropt/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
+# environment
+OLDPWD = /home/liyropt/Projects/GIT
+# environment
+MODULES_RUN_QUARANTINE = LD_LIBRARY_PATH LD_PRELOAD
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/liyropt/.config/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/user/1000/gdm/Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+GNOME_TERMINAL_SERVICE = :1.103
+# makefile
+MAKEFLAGS = pqrR
+# environment
+PKG_CONFIG_PATH = /usr/lib64/mpich/lib/pkgconfig
+# environment
+__MODULES_LMCONFLICT = mpi/mpich-x86_64&mpi
+# makefile
+CURDIR := /home/liyropt/Projects/GIT/Decomp
+# environment
+define BASH_FUNC_module%%
+() {  _module_raw "$@" 2>&1
+}
+endef
+# environment
+MPI_LIB = /usr/lib64/mpich/lib
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+LESSOPEN = ||/usr/bin/lesspipe.sh %s
+# environment
+MPI_HOME = /usr/lib64/mpich
+# environment
+MPI_COMPILER = mpich-x86_64
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# environment
+HISTSIZE = 1000
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XDG_SESSION_DESKTOP = gnome-classic
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+__MODULES_LMALTNAME = mpi/mpich-x86_64&as|mpi/default&as|mpi/latest
+# environment
+VSCODE_PID = 6759
+# makefile (from 'Makefile', line 13)
+GSL_LIBS = $(shell pkg-config --libs gsl) 
+# makefile (from 'Makefile', line 17)
+DNEST_LIBS = -L /home/liyropt/Projects/GIT/CDNest -ldnest
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from 'Makefile', line 11)
+NCORE := 
+# environment
+SESSION_MANAGER = local/unix:@/tmp/.ICE-unix/3194,unix/unix:/tmp/.ICE-unix/3194
+# automatic
+*F = $(notdir $*)
+# makefile (from 'Makefile', line 1)
+HELL = /bin/bash
+# environment
+MANPATH = /usr/share/man/mpich-x86_64:/usr/share/man:
+# environment
+MODULEPATH = /usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# makefile (from 'Makefile', line 37)
+EXEC = decomp
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+define BASH_FUNC_ml%%
+() {  module ml "$@"
+}
+endef
+# default
+MAKE_HOST := x86_64-redhat-linux-gnu
+# makefile (from 'Makefile', line 39)
+OBJS = $(SRC)/main.o $(SRC)/allvars.o $(SRC)/mathfun.o $(SRC)/system.o $(SRC)/read.o $(SRC)/run.o $(SRC)/help.o $(SRC)/recon.o $(SRC)/mc_dnest.o
+# makefile
+SHELL = /bin/sh
+# makefile (from 'Makefile', line 14)
+LAPACK_INCL = -I/usr/include/lapacke
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+LD_LIBRARY_PATH = /usr/local/cuda/lib64:/home/liyropt/Projects/GIT/CDNest:/usr/local/cuda/lib64:/home/liyropt/Projects/GIT/CDNest:/usr/lib64/mpich/lib
+# environment
+SHLVL = 2
+# environment
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/c9bdf585_ca3f_4a8a_8295_ec313050c13f
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /usr/local/cuda/bin:/home/liyropt/.iraf/bin:/home/liyropt/.iraf/bin:/usr/local/cuda/bin:/home/liyropt/.iraf/bin:/usr/lib64/mpich/bin:/home/liyropt/.local/bin:/home/liyropt/bin:/usr/share/Modules/bin:/home/liyropt/.iraf/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin
+# environment
+MOZ_GMP_PATH = /usr/lib64/mozilla/plugins/gmp-gmpopenh264/system-installed
+# default
+MAKEFILES := 
+# environment
+MODULESHOME = /usr/share/Modules
+# environment
+MPI_SYSCONFIG = /etc/mpich-x86_64
+# environment
+MPI_PYTHON3_SITEARCH = /usr/lib64/python3.10/site-packages/mpich
+# automatic
+^F = $(notdir $^)
+# environment
+LOADEDMODULES = mpi/mpich-x86_64
+# environment
+MPI_BIN = /usr/lib64/mpich/bin
+# makefile (from 'Makefile', line 43)
+INCL = Makefile  $(SRC)/allvars.h $(SRC)/proto.h $(SRC)/mc_dnest.h
+# environment
+USERNAME = liyropt
+# environment
+iraf = /home/liyropt/Tools/PyRAF/iraf-2.17/
+# automatic
+?F = $(notdir $?)
+# environment
+XDG_CURRENT_DESKTOP = GNOME-Classic:GNOME
+# environment
+KDEDIRS = /usr
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.m4a=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.oga=01;36:*.opus=01;36:*.spx=01;36:*.xspf=01;36:
+# automatic
++F = $(notdir $+)
+# environment
+DESKTOP_SESSION = gnome-classic
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = GNOME-Classic:GNOME
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = liyropt
+# environment
+_LMFILES_ = /usr/share/modulefiles/mpi/mpich-x86_64
+# environment
+MPI_SUFFIX = _mpich
+# makefile (from 'Makefile', line 19)
+MPICHINCL = $(shell pkg-config --cflags mpich) 
+# makefile
+.DEFAULT_GOAL := decomp
+# environment
+MPI_INCLUDE = /usr/include/mpich-x86_64
+# environment
+SYSTEMD_EXEC_PID = 3252
+# makefile (from 'Makefile', line 12)
+GSL_INCL = $(shell pkg-config --cflags gsl) 
+# environment
+HISTCONTROL = ignoredups
+# makefile (from 'Makefile', line 15)
+LAPACK_LIBS = -L/usr/lib64 -llapacke -llapack -lblas
+# environment
+EDITOR = /usr/bin/nano
+# environment
+DISPLAY = :1
+# environment
+USER = liyropt
+# default
+MAKE_VERSION := 4.3
+# environment
+IDL_PATH = <IDL_DEFAULT>:+/home/liyropt/Tools/IDL
+# makefile (from 'Makefile', line 20)
+MPICHLIB = $(shell pkg-config --libs mpich) 
+# environment
+which_declare = declare -f
+# environment
+DEBUGINFOD_URLS = https://debuginfod.fedoraproject.org/ 
+# environment
+PYTHONPATH = /home/liyropt/Projects/Pythonlib:/home/liyropt/Projects/Pythonlib:
+# environment
+SSH_AGENT_PID = 3091
+# environment
+IRAFARCH = linux64
+# environment
+_ = /usr/bin/make
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# makefile (from 'Makefile', line 46)
+CFLAGS = $(OPTIONS) $(GSL_INCL) $(LAPACK_INCL) $(MPICHINCL) $(DNEST_INCL)
+# environment
+COLORTERM = truecolor
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/liyropt
+# environment
+QT_IM_MODULE = ibus
+# makefile (from 'Makefile', line 45)
+OPTIONS = $(OPTIMIZE)
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-1a0ead2a-1.69.1-main.sock
+# environment
+TERM = xterm-256color
+# makefile (from 'Makefile', line 4)
+OPTIMIZE = -O2 -Wall -finline-functions
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# environment
+define BASH_FUNC__module_raw%%
+() {  eval `/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+endef
+# default
+SUFFIXES := 
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+VTE_VERSION = 6800
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
+# makefile (from 'Makefile', line 3)
+CC = mpicc
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+__MODULES_SHARE_MANPATH = :2
+# environment
+GDMSESSION = gnome-classic
+# environment
+MPI_PYTHON_SITEARCH = %{python2_sitearch}/mpich
+# variable set hash-table stats:
+# Load=151/1024=15%, Rehash=0, Collisions=83/209=40%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66309, inode 6953818): 10 files, no impossibilities.
+
+# 10 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+src/run.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/help.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+ 
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-01-13 15:43:11.099550862
+#  File has been updated.
+#  Successfully updated.
+
+src/read.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 56):
+	rm -f $(OBJS) $(EXEC)
+
+src/recon.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/main.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+decomp: src/main.o src/allvars.o src/mathfun.o src/system.o src/read.o src/run.o src/help.o src/recon.o src/mc_dnest.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 50):
+	cd $(SRC)
+	$(CC) $(OBJS) $(LIBS) -o $@
+
+# Not a target:
+src/proto.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/mc_dnest.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/allvars.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/allvars.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/mc_dnest.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/system.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/mathfun.o: Makefile src/allvars.h src/proto.h src/mc_dnest.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=18/1024=2%, Rehash=0, Collisions=0/50=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 28 / storage = 278 B / avg = 9 B
+# current buf: size = 8162 B / used = 278 B / count = 28 / avg = 9 B
+
+# strcache performance: lookups = 54 / hit rate = 48%
+# hash-table stats:
+# Load=28/8192=0%, Rehash=0, Collisions=0/54=0%
+# Finished Make data base on Mon Jul 18 15:31:41 2022
+
+ 

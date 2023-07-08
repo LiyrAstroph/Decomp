@@ -1,0 +1,24 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/liyropt/Projects/GIT/Decomp'
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/main.o src/main.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/allvars.o src/allvars.c
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/mathfun.o src/mathfun.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/system.o src/system.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/read.o src/read.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/run.o src/run.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/help.o src/help.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/recon.o src/recon.c
+ 
+mpicc -O2 -Wall -finline-functions   -I/usr/include/lapacke -I/usr/include/mpich-x86_64   -I /home/liyropt/Projects/GIT/CDNest/   -c -o src/mc_dnest.o src/mc_dnest.c
+ 
+cd ./src
+mpicc ./src/main.o ./src/allvars.o ./src/mathfun.o ./src/system.o ./src/read.o ./src/run.o ./src/help.o ./src/recon.o ./src/mc_dnest.o -lgsl -lgslcblas -lm   -L/usr/lib64 -llapacke -llapack -lblas -L/usr/lib64/mpich/lib -lmpi -lhwloc -lpthread   -L /home/liyropt/Projects/GIT/CDNest -ldnest -o decomp
+make: Leaving directory '/home/liyropt/Projects/GIT/Decomp'
+ 
